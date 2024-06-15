@@ -6,14 +6,17 @@ import Image from "next/image";
 import { StarLight } from "./components/Decorations/StarLight";
 import { Light } from "./components/Decorations/Light";
 import HeaderImg from "@/public/img/ilustracao-header.png";
+import RedeImg from "@/public/img/rede.png";
+import { CardComponent } from "./components/Card/Card";
+import pageCards from "./components/Card/pageCards";
 
 export default function Home() {
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative h-full overflow-hidden">
       <NavBar />
       <header className="flex justify-around items-center py-5 w-screen h-full !max-h-[300px] my-32 max-w-screen-2xl m-auto">
-        <div>
-          <h1 className="text-5xl font-semibold relative shadow-sm">
+        <div className="*:z-[999]">
+          <h1 className="text-5xl font-semibold relative ">
             <StarLight className="text-sm !top-[-35px] !left-[20px]" />
             <StarLight className="!left-[-55px] !top-[40px] text-2xl z-0" />
             Precisando de ‎
@@ -31,15 +34,34 @@ export default function Home() {
             Get Started <Arrow />
           </Button>
         </div>
-        <div className="relative">
-          <Light className="right-[4rem] top-[4rem] !w-44 !h-44 !blur-3xl !z-0" />
+        <div className="relative ">
+          <Light className="right-[4rem] top-[4rem] !w-44 !h-44 !blur-3xl !z-0 " />
           <Image
             src={HeaderImg}
             alt=""
-            className="w-[500px] h-fit !z-[999] animate-slide-down"
+            className="w-[500px] h-fit !z-[999] animate-slide-down !relative"
           />
         </div>
       </header>
+      <main className="w-screen pt-24 ">
+        <h1 className="text-5xl font-semibold text-center ">
+          Encontre o{" "}
+          <span className="bg-gradient-to-b from-sky-400 to-sky-500 inline-block text-transparent bg-clip-text font-semibold">
+            freelancers
+          </span>
+          {" "}para
+        </h1>
+        <div className="relative flex justify-center gap-1 flex-wrap mt-12">
+          <Light className="!w-24 !h-24 left-[37%] top-[9rem] blur-3xl bg-green-400 shadow-green-400" />
+          <Light className="!w-24 !h-24 left-[10%] blur-3xl" />
+          <Light className="!w-24 !h-24 right-[18%] blur-3xl bg-orange-400 shadow-orange-400" />
+          {pageCards.map((item) => {
+            return (
+              <CardComponent icon={item.icon} title={item.title} href={item.href} />
+            )
+          })}
+        </div>
+      </main>
     </div>
   );
 }
