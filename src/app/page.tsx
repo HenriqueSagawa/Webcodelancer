@@ -44,23 +44,29 @@ export default function Home() {
         </div>
       </header>
       <main className="w-screen pt-24 ">
-        <h1 className="text-5xl font-semibold text-center ">
-          Encontre o{" "}
-          <span className="bg-gradient-to-b from-sky-400 to-sky-500 inline-block text-transparent bg-clip-text font-semibold">
-            freelancers
-          </span>
-          {" "}para
-        </h1>
-        <div className="relative flex justify-center gap-1 flex-wrap mt-12">
-          <Light className="!w-24 !h-24 left-[37%] top-[9rem] blur-3xl bg-green-400 shadow-green-400" />
-          <Light className="!w-24 !h-24 left-[10%] blur-3xl" />
-          <Light className="!w-24 !h-24 right-[18%] blur-3xl bg-orange-400 shadow-orange-400" />
-          {pageCards.map((item) => {
-            return (
-              <CardComponent icon={item.icon} title={item.title} href={item.href} />
-            )
-          })}
-        </div>
+        <section>
+          <h1 className="text-5xl font-semibold text-center ">
+            Encontre o{" "}
+            <span className="bg-gradient-to-b from-sky-400 to-sky-500 inline-block text-transparent bg-clip-text font-semibold">
+              freelancers
+            </span>{" "}
+            para
+          </h1>
+          <div className="relative flex justify-center gap-1 flex-wrap mt-12">
+            <Light className="!w-24 !h-24 left-[37%] top-[9rem] blur-3xl bg-green-400 shadow-green-400" />
+            <Light className="!w-24 !h-24 left-[10%] blur-3xl" />
+            <Light className="!w-24 !h-24 right-[18%] blur-3xl bg-orange-400 shadow-orange-400" />
+            {pageCards.map((item) => {
+              return (
+                <CardComponent
+                  icon={item.icon}
+                  title={item.title}
+                  href={item.href}
+                />
+              );
+            })}
+          </div>
+        </section>
       </main>
     </div>
   );
