@@ -9,6 +9,8 @@ import HeaderImg from "@/public/img/ilustracao-header.png";
 import RedeImg from "@/public/img/rede.png";
 import { CardComponent } from "./components/Card/Card";
 import pageCards from "./components/Card/pageCards";
+import { IoDocumentOutline, IoShieldOutline } from "react-icons/io5";
+import { CiUser } from "react-icons/ci";
 
 export default function Home() {
   return (
@@ -65,6 +67,42 @@ export default function Home() {
                 />
               );
             })}
+          </div>
+        </section>
+
+        <section className="mt-36">
+          <h1 className="text-5xl font-semibold text-center">Como funciona?</h1>
+          <div className="flex flex-wrap justify-center gap-8 mt-10">
+            <div className="max-w-80 flex flex-col items-center p-5">
+              <IoDocumentOutline size={65} />
+              <h3 className="font-semibold text-2xl text-center">
+                Publique uma vaga
+              </h3>
+              <p className="text-center">
+                Publique a sua vaga para milhares de profissionais, você irá
+                receber propostas de freelancers talentosos em poucos minutos.
+              </p>
+            </div>
+            <div className="max-w-80 flex flex-col items-center p-5">
+              <CiUser size={65} />
+              <h3 className="font-semibold text-2xl text-center">Contrate</h3>
+              <p className="text-center">
+                Reveja o histórico de trabalho, feedback de clientes e portfólio
+                para limitar os candidatos. Então faça uma entrevista pelo chat
+                e escolha o melhor.
+              </p>
+            </div>
+            <div className="max-w-80 flex flex-col items-center p-5">
+              <IoShieldOutline size={65} />
+              <h3 className="font-semibold text-2xl text-center">
+                Pague com segurança
+              </h3>
+              <p className="text-center">
+                Com o pagamento seguro da WebCodeLancer, o pagamento será
+                repassado para o freelancer somente quando o projeto estiver
+                concluído.
+              </p>
+            </div>
           </div>
         </section>
       </main>
