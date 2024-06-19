@@ -11,6 +11,7 @@ import { CardComponent } from "./components/Card/Card";
 import pageCards from "./components/Card/pageCards";
 import { IoDocumentOutline, IoShieldOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
+import { Footer } from "./components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -106,11 +107,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="flex justify-center items-center py-12 w-screen h-24 mt-12">
-        <p className="text-center text-gray-600">
-          &copy; 2023 WebCodeLancer. Todos os direitos reservados.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
