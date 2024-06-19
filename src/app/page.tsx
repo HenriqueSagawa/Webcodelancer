@@ -18,7 +18,7 @@ export default function Home() {
       <NavBar />
       <header className="flex justify-around items-center py-5 w-screen h-full !max-h-[300px] my-32 max-w-screen-2xl m-auto">
         <div className="*:z-[999]">
-          <h1 className="text-5xl font-semibold relative ">
+          <h1 className="text-6xl font-semibold relative ">
             <StarLight className="text-sm !top-[-35px] !left-[20px]" />
             <StarLight className="!left-[-55px] !top-[40px] text-2xl z-0" />
             Precisando de ‎
@@ -28,7 +28,7 @@ export default function Home() {
             </span>
             <br /> para seus projetos?
           </h1>
-          <p className="text-sm text-gray-500 my-4">
+          <p className="text-md text-gray-500 my-4">
             Encontre freelancers de programação web para transformar suas ideias{" "}
             <br /> em realidade. Vamos acender a luz do seu projeto!
           </p>
@@ -106,6 +106,11 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <footer className="flex justify-center items-center py-12 w-screen h-24 mt-12">
+        <p className="text-center text-gray-600">
+          &copy; 2023 WebCodeLancer. Todos os direitos reservados.
+        </p>
+      </footer>
     </div>
   );
 }
