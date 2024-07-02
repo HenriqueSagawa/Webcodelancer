@@ -17,7 +17,7 @@ export function NavBar() {
   return (
     <Navbar isBlurred className="bg-transparent !max-w-screen-2xl mx-auto">
       <NavbarBrand>
-        <Link href="#" className="text-white">
+        <Link href="./" className="text-white">
           <Image
             alt="WebCodeLancer"
             src={logo}
@@ -54,7 +54,7 @@ export function NavBar() {
         </NavbarItem>
 
         <NavbarItem>
-          <Link href="#">
+          <Link href="/Login">
             <Button variant="flat" color="primary" className="!px-6">
               Sign in
             </Button>
