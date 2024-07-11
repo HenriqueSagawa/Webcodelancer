@@ -49,7 +49,7 @@ export default function Home() {
       <main className="w-screen pt-24 ">
         <section>
           <h1 className="text-5xl font-semibold text-center ">
-            Encontre o{" "}
+            Encontre {" "}
             <span className="bg-gradient-to-b from-sky-400 to-sky-500 inline-block text-transparent bg-clip-text font-semibold">
               freelancers
             </span>{" "}

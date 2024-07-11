@@ -1,15 +1,26 @@
+"use client";   
+
 import { NavBar } from "../../components/Navbar/Navbar";
-import { Input } from "@nextui-org/input";
+import { Input, Button } from "@nextui-org/react";
 import formArt from "@/public/img/formArt.jpeg";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import Link from "next/link";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+
 
 export default function Login() {
+    const [isVisible, setIsVisible] = useState(false);
+
+    function handleVisibility() {
+        setIsVisible(!isVisible);
+    }
+
     return (
         <div>
             <NavBar />
-            <div className="min-h-screen bg-gray-100 dark:bg-[hsl(240,_10%,_3.9%)] text-gray-900 flex justify-center items-center">    
+            <div className="min-h-screen bg-gray-100 dark:bg-[hsl(240,_10%,_3.9%)] text-gray-900 flex justify-center items-center">
                 <div className="max-w-screen-xl h-[750px] m-0 sm:m-10 dark:bg-zinc-700 bg-white shadow sm:rounded-lg flex justify-between flex-1">
                     <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 flex flex-col items-center justify-center mx-auto">
                         <div className="flex items-center justify-center font-semibold">
@@ -17,7 +28,7 @@ export default function Login() {
                                 src={Logo}
                                 alt="WebCodeLancer"
                                 className="w-14 dark:!invert" />
-                                <h1 className="dark:text-white">WebCodeLancer</h1>
+                            <h1 className="dark:text-white">WebCodeLancer</h1>
                         </div>
                         <div className="mt-4 flex flex-col items-center">
                             <h1 className="text-2xl xl:text-3xl font-extrabold dark:text-white">
@@ -70,14 +81,20 @@ export default function Login() {
                                 </div>
 
                                 <div className="mx-auto max-w-xs">
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                                        type="email" placeholder="Email" />
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                                        type="password" placeholder="Password" />
-                                    <button
-                                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+
+                                    <Input type="text" variant="underlined" label="email" className="min-w-[300px]" />
+
+                                    <Input type={isVisible ? "text" : "password"} variant="underlined" label="password" className="min-w-[300px]" endContent={
+                                        <button className="focus:outline-none" type="button" onClick={handleVisibility}>
+                                            {isVisible ? (
+                                                <FaEye color="#a7a7a7" />
+                                            ) : (
+                                                <FaEyeSlash color="#a7a7a7" />
+                                            )}
+                                        </button>
+                                    } />
+                                    <Button
+                                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-7 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                         <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -87,7 +104,7 @@ export default function Login() {
                                         <span className="ml-3">
                                             Sign In
                                         </span>
-                                    </button>
+                                    </Button>
                                     <p className="mt-6 text-xs text-gray-600 text-center dark:text-white">
                                         Não possui conta? <Link className="!text-blue-500" href="./Register">Clique aqui</Link>
                                     </p>
@@ -97,7 +114,7 @@ export default function Login() {
                     </div>
                     <div className="overflow-hidden lg:flex p-0 sm:hidden w-1/2">
                         <Image alt="" src={formArt} className="rounded rounded-l-none w-full h-fit"
-                            >
+                        >
                         </Image>
                     </div>
                 </div>

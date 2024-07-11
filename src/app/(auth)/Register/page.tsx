@@ -1,13 +1,33 @@
+"use client"
+
 import { NavBar } from "../../components/Navbar/Navbar";
-import { Input } from "@nextui-org/input";
+import { Input, Button } from "@nextui-org/react";
 import formArt from "@/public/img/formArt.jpeg";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import Link from "next/link";
 import { RadioGroup, Radio } from "@nextui-org/react";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 
 export default function Register() {
+
+    const [isVisible, setIsVisible] = useState(false);
+    const [passWordConVisible, setPassConVisible] = useState(false);
+    const [passIncorrect, setPassIncorrect] = useState(false);
+
+    function handlePassIncorrect() {
+        setPassIncorrect(!passIncorrect);
+    }
+
+    function handleVisibility() {
+        setIsVisible(!isVisible);
+    }
+
+    function handlePassConVisibility() {
+        setPassConVisible(!passWordConVisible);
+    }
+
     return (
         <div>
             <NavBar />
@@ -72,25 +92,38 @@ export default function Register() {
                                 </div>
 
                                 <div className="mx-auto max-w-xs">
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium mt-3 bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                                        type="text" placeholder="Nome" />
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium mt-3 bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                                        type="email" placeholder="Email" />
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-3"
-                                        type="password" placeholder="Password" />
-                                    <input
-                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-3"
-                                        type="password" placeholder="Confirm Password" />
-                                    <p className="dark:text-white">Criar conta como:</p>
-                                    <RadioGroup className="!flex flex-row mt-3 dark:text-white">
-                                        <Radio value="cliente" className="light">Cliente</Radio>
-                                        <Radio value="freelancer" className="light">Freelancer</Radio>
+
+                                    <Input type="text" label="Nome" variant="underlined" className="min-w-[300px]" />
+
+                                    <Input type="email" label="Email" variant="underlined" className="min-w-[300px]" />
+
+                                    <Input type={isVisible ? "text" : "password"} label="Password" variant="underlined" className="min-w-[300px]" endContent={
+                                        <button onClick={handleVisibility}>
+                                            {isVisible ? (
+                                                <FaEye color="#a7a7a7" />
+                                            ) : (
+                                                <FaEyeSlash color="#a7a7a7" />
+                                            )}
+                                        </button>
+                                    } />
+
+                                    <Input type={passWordConVisible ? "text" : "password"} label="Confirm Password" variant="underlined" className={`min-w-[300px]`} endContent={
+                                        <button onClick={handlePassConVisibility}>
+                                            {passWordConVisible ? (
+                                                <FaEye color="#a7a7a7" />
+                                            ) : (
+                                                <FaEyeSlash color="#a7a7a7" />
+                                            )}
+                                        </button>
+                                    } />
+
+                                    <p className="dark:text-white mt-3">Criar conta como:</p>
+                                    <RadioGroup orientation="horizontal" className="!flex flex-row mt-3 dark:text-white">
+                                        <Radio value="cliente" className="light !text-white"><span className="text-white">Cliente</span></Radio>
+                                        <Radio value="freelancer" className="light"><span className="text-white">Freelancer</span></Radio>
                                     </RadioGroup>
-                                    <button
-                                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                                    <Button
+                                        className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-7 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                         <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -100,7 +133,7 @@ export default function Register() {
                                         <span className="ml-3">
                                             Sign Up
                                         </span>
-                                    </button>
+                                    </Button>
                                     <p className="mt-6 text-xs text-gray-600 text-center dark:text-white">
                                         Já possui conta? <Link className="!text-blue-500" href="./Login">Clique aqui</Link>
                                     </p>

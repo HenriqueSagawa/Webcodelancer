@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { Card } from "@nextui-org/card";
+import color from "./pageCards";
 
 export function CardComponent({
   icon,
@@ -17,7 +18,7 @@ export function CardComponent({
       <div>{icon}</div>
       <h2 className="text-center text-dark dark:text-white font-semibold text-xl px-2 pb-5">{title}</h2>
       <Link href={href}>
-        <Button variant="solid" color="primary" className="!bg-[#00b4d8] !rounded-none w-screen">
+        <Button variant="solid" color="primary" className={`!bg-[${color}] !rounded-none w-screen`}>
           Acessar
         </Button>
       </Link>
