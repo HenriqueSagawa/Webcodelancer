@@ -9,8 +9,62 @@ import Link from "next/link";
 import { RadioGroup, Radio } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { z } from "zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { getUser, registerUser } from "@/src/services/register";
+import { useRouter } from "next/navigation";
+import { saveUserData, getUserData } from "@/src/services/saveLogin";
+
 
 export default function Register() {
+
+    const router = useRouter();
+
+    if (getUserData()) {
+        router.push('/');
+    }
+
+    console.log(getUserData());
+
+    const User = z.object({
+        name: z.string(),
+        email: z.string().email({ message: "Email inválido" }),
+        password: z.string().min(8, { message: "Senha inválida" }),
+        confirmPassword: z.string().min(1,  { message: "Senhas não são iguais" }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Senhas não são iguais", 
+        path: ['confirmPassword']   
+    });
+
+    type User = z.infer<typeof User>
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm<User>({
+        resolver: zodResolver(User)
+    });
+
+    const onSubmit: SubmitHandler<User> = async (data) => {
+        if (await getUser(data.email)) {
+            alert("Usuário já existe");
+        } else {
+            try {
+                const dataUpdate = (({ confirmPassword, ...resto }) => resto)(data);
+                saveUserData(dataUpdate);
+                const user: any = await registerUser(dataUpdate);
+                if (user) {
+                    router.push("/");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        } 
+    }
 
     const [isVisible, setIsVisible] = useState(false);
     const [passWordConVisible, setPassConVisible] = useState(false);
@@ -91,13 +145,14 @@ export default function Register() {
                                     </div>
                                 </div>
 
-                                <div className="mx-auto max-w-xs">
+                                <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-xs">
 
-                                    <Input type="text" label="Nome" variant="underlined" className="min-w-[300px]" />
+                                    <Input {...register("name")} type="text" label="Nome" variant="underlined" className="min-w-[300px]" />
 
-                                    <Input type="email" label="Email" variant="underlined" className="min-w-[300px]" />
+                                    <Input {...register("email")} type="email" label="Email" variant="underlined" className="min-w-[300px]" />
+                                    { errors.email && (<p className="text-red-600 w-full text-sm text-left">{errors.email.message}</p>) }
 
-                                    <Input type={isVisible ? "text" : "password"} label="Password" variant="underlined" className="min-w-[300px]" endContent={
+                                    <Input {...register("password")} type={isVisible ? "text" : "password"} label="Password" variant="underlined" className="min-w-[300px]" endContent={
                                         <button onClick={handleVisibility}>
                                             {isVisible ? (
                                                 <FaEye color="#a7a7a7" />
@@ -107,7 +162,9 @@ export default function Register() {
                                         </button>
                                     } />
 
-                                    <Input type={passWordConVisible ? "text" : "password"} label="Confirm Password" variant="underlined" className={`min-w-[300px]`} endContent={
+                                    { errors.password && (<p className="text-red-600 w-full text-sm text-left">{errors.password.message}</p>) }
+
+                                    <Input {...register("confirmPassword")} type={passWordConVisible ? "text" : "password"} label="Confirm Password" variant="underlined" className={`min-w-[300px]`} endContent={
                                         <button onClick={handlePassConVisibility}>
                                             {passWordConVisible ? (
                                                 <FaEye color="#a7a7a7" />
@@ -117,12 +174,9 @@ export default function Register() {
                                         </button>
                                     } />
 
-                                    <p className="dark:text-white mt-3">Criar conta como:</p>
-                                    <RadioGroup orientation="horizontal" className="!flex flex-row mt-3 dark:text-white">
-                                        <Radio value="cliente" className="light !text-white"><span className="text-white">Cliente</span></Radio>
-                                        <Radio value="freelancer" className="light"><span className="text-white">Freelancer</span></Radio>
-                                    </RadioGroup>
+                                    { errors.confirmPassword && (<p className="text-red-600 w-full text-sm text-left">{errors.confirmPassword.message}</p>) }
                                     <Button
+                                        type="submit"
                                         className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-7 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                         <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
@@ -137,7 +191,7 @@ export default function Register() {
                                     <p className="mt-6 text-xs text-gray-600 text-center dark:text-white">
                                         Já possui conta? <Link className="!text-blue-500" href="./Login">Clique aqui</Link>
                                     </p>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

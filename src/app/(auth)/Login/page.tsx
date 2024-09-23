@@ -8,10 +8,53 @@ import Logo from "@/public/logo.svg";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
-
+import { getUserData, saveUserData } from "@/src/services/saveLogin";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { getUser } from "@/src/services/register";
 
 export default function Login() {
     const [isVisible, setIsVisible] = useState(false);
+
+    const router = useRouter();
+
+    const userData = getUserData();
+
+    if (userData) {
+        router.push("/");
+    }
+
+    const User = z.object({
+        email: z.string(),
+        password: z.string()
+    });
+
+    type User = z.infer<typeof User>
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<User> ({
+        resolver: zodResolver(User)
+    });
+
+    const onSubmit: SubmitHandler<User> = async (data) => {
+        const user = await getUser(data.email);
+
+        if (user && user.password === data.password) {
+            saveUserData(user);
+            router.push("/");
+        } else {
+            alert("Email ou senha inválidos");
+        }
+    }
+
+    if (userData) {
+        router.push("/");
+    }
 
     function handleVisibility() {
         setIsVisible(!isVisible);
@@ -80,11 +123,11 @@ export default function Login() {
                                     </div>
                                 </div>
 
-                                <div className="mx-auto max-w-xs">
+                                <form onSubmit={handleSubmit(onSubmit)} className="mx-auto max-w-xs">
 
-                                    <Input type="text" variant="underlined" label="email" className="min-w-[300px]" />
+                                    <Input {...register('email')} type="text" variant="underlined" label="email" className="min-w-[300px]" />
 
-                                    <Input type={isVisible ? "text" : "password"} variant="underlined" label="password" className="min-w-[300px]" endContent={
+                                    <Input {...register("password")} type={isVisible ? "text" : "password"} variant="underlined" label="password" className="min-w-[300px]" endContent={
                                         <button className="focus:outline-none" type="button" onClick={handleVisibility}>
                                             {isVisible ? (
                                                 <FaEye color="#a7a7a7" />
@@ -93,7 +136,7 @@ export default function Login() {
                                             )}
                                         </button>
                                     } />
-                                    <Button
+                                    <Button type="submit"
                                         className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-7 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                                         <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
@@ -105,10 +148,10 @@ export default function Login() {
                                             Sign In
                                         </span>
                                     </Button>
-                                    <p className="mt-6 text-xs text-gray-600 text-center dark:text-white">
-                                        Não possui conta? <Link className="!text-blue-500" href="./Register">Clique aqui</Link>
-                                    </p>
-                                </div>
+                                </form>
+                                <p className="mt-6 text-xs text-gray-600 text-center dark:text-white">
+                                    Não possui conta? <Link className="!text-blue-500" href="./Register">Clique aqui</Link>
+                                </p>
                             </div>
                         </div>
                     </div>

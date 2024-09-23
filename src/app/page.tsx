@@ -14,10 +14,11 @@ import { CiUser } from "react-icons/ci";
 import { Footer } from "./components/Footer/Footer";
 
 export default function Home() {
+
   return (
     <div className="relative h-full overflow-hidden">
       <NavBar />
-      <header className="flex justify-around items-center py-5 w-screen h-full !max-h-[300px] my-32 max-w-screen-2xl m-auto">
+      <header className="flex justify-around items-center py-5 w-screen h-full !max-h-[450px] my-32 max-w-screen-2xl m-auto">
         <div className="*:z-[999]">
           <h1 className="text-6xl font-semibold relative ">
             <StarLight className="text-sm !top-[-35px] !left-[20px]" />
