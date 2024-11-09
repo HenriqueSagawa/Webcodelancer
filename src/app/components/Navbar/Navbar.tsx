@@ -15,6 +15,12 @@ import { ToggleTheme } from "../ToggleTheme/ToggleTheme";
 import { PiGithubLogoFill } from "react-icons/pi";
 import { getUserData } from "@/src/services/saveLogin";
 import { useRouter } from "next/navigation";
+import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@nextui-org/dropdown";
+import { FaRegUser } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
+import { MdLogout } from "react-icons/md";
+
+
 
 export function NavBar() {
   const user = getUserData();
@@ -59,7 +65,24 @@ export function NavBar() {
         </NavbarItem>
         <NavbarItem>
           {user ? (
-              <span>Olá {user.name}</span>
+            <Dropdown>
+              <DropdownTrigger className="cursor-pointer">
+                <Button color="default" variant="light" className="text-white">
+                  <span>Olá {user.name}</span>
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownItem>
+                  <Link className="text-white flex items-center gap-2 *:" href="/Profile"><FaRegUser />Perfil</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link className="text-white flex items-center gap-2 *:" href="/Settings"><IoSettingsOutline /> Configurações</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link className="text-white flex items-center gap-2 *:" href="/logout"><MdLogout /> Sair</Link>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           ) : (
             <Link href="/Login">
               <Button variant="flat" color="primary" className="!px-6">
