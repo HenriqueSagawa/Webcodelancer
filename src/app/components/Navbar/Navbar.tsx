@@ -67,7 +67,7 @@ export function NavBar() {
           {user ? (
             <Dropdown>
               <DropdownTrigger className="cursor-pointer">
-                <Button color="default" variant="light" className="text-white">
+                <Button color="default" variant="light" className="dark:text-white">
                   <span>Olá {user.name}</span>
                 </Button>
               </DropdownTrigger>

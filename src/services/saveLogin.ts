@@ -16,7 +16,7 @@ function getStorageValue(key: any, defaultValue: any) {
     }
 }
 
-export function getUserData(email: string) {
+export function getUserData() {
     return getStorageValue("tokenWebCodeLancer", null);
 }
 
