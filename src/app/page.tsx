@@ -1,29 +1,26 @@
-import { ToggleTheme } from "./components/ToggleTheme/ToggleTheme";
-import { NavBar } from "./components/Navbar/Navbar";
 import { Button, autocomplete } from "@nextui-org/react";
-import { Arrow } from "./components/Decorations/Arrow";
+import { Arrow } from "../components/Decorations/Arrow";
 import Image from "next/image";
-import { StarLight } from "./components/Decorations/StarLight";
-import { Light } from "./components/Decorations/Light";
+import { StarLight } from "../components/Decorations/StarLight";
+import { Light } from "../components/Decorations/Light";
 import HeaderImg from "@/public/img/ilustracao-header.png";
 import RedeImg from "@/public/img/rede.png";
-import { CardComponent } from "./components/Card/Card";
-import pageCards from "./components/Card/pageCards";
+import { CardComponent } from "../components/Card/Card";
+import pageCards from "../components/Card/pageCards";
 import { IoDocumentOutline, IoShieldOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
-import { Footer } from "./components/Footer/Footer";
+import { Footer } from "../components/Footer/Footer";
 
 export default function Home() {
 
   return (
     <div className="relative h-full overflow-hidden">
-      <NavBar />
       <header className="flex justify-around items-center py-5 w-screen h-full !max-h-[450px] my-32 max-w-screen-2xl m-auto">
         <div className="*:z-[999]">
           <h1 className="text-6xl font-semibold relative ">
             <StarLight className="text-sm !top-[-35px] !left-[20px]" />
             <StarLight className="!left-[-55px] !top-[40px] text-2xl z-0" />
-            Precisando de ‎
+            Precisando de {" "}
             <span className="bg-gradient-to-r from-[#E60599] to-[#025CA4] inline-block text-transparent bg-clip-text relative">
               <Light className="-right-[12px]" />
               uma luz
@@ -35,7 +32,7 @@ export default function Home() {
             <br /> em realidade. Vamos acender a luz do seu projeto!
           </p>
           <Button variant="shadow" color="secondary">
-            Get Started <Arrow />
+            Começar <Arrow />
           </Button>
         </div>
         <div className="relative ">
@@ -56,13 +53,14 @@ export default function Home() {
             </span>{" "}
             para
           </h1>
-          <div className="relative flex justify-center gap-1 flex-wrap mt-12">
+          <div className="relative flex justify-center gap-1 mt-12">
             <Light className="!w-24 !h-24 left-[37%] top-[9rem] blur-3xl bg-green-400 shadow-green-400" />
             <Light className="!w-24 !h-24 left-[10%] blur-3xl" />
             <Light className="!w-24 !h-24 right-[18%] blur-3xl bg-orange-400 shadow-orange-400" />
-            {pageCards.map((item) => {
+            {pageCards.map((item, index) => {
               return (
                 <CardComponent
+                  key={index}
                   icon={item.icon}
                   title={item.title}
                   href={item.href}

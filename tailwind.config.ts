@@ -3,9 +3,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -19,15 +17,16 @@ const config: Config = {
         slideDown: {
           "0%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
-          "100%": { transform: "TranslateY(0)" }
+          "100%": { transform: "translateY(0)" }
         }
       },
       animation: {
-        "slide-down":"slideDown 4.5s linear infinite",
+        "slide-down": "slideDown 4.5s linear infinite",
       }
     },
   },
   darkMode: "class",
   plugins: [nextui()],
 };
+
 export default config;
