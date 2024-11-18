@@ -1,10 +1,9 @@
-import { Button, autocomplete } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { Arrow } from "../components/Decorations/Arrow";
 import Image from "next/image";
 import { StarLight } from "../components/Decorations/StarLight";
 import { Light } from "../components/Decorations/Light";
 import HeaderImg from "@/public/img/ilustracao-header.png";
-import RedeImg from "@/public/img/rede.png";
 import { CardComponent } from "../components/Card/Card";
 import pageCards from "../components/Card/pageCards";
 import { IoDocumentOutline, IoShieldOutline } from "react-icons/io5";
@@ -12,6 +11,7 @@ import { CiUser } from "react-icons/ci";
 import { Footer } from "../components/Footer/Footer";
 
 export default function Home() {
+
 
   return (
     <div className="relative h-full overflow-hidden">

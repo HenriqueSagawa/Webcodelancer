@@ -4,11 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Input, Checkbox, Button } from "@nextui-org/react";
 import googleIcon from "@/public/google.svg"
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaGithub } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { getUser } from "@/src/services/register";
 
 export default function Login() {
 
@@ -20,7 +23,6 @@ export default function Login() {
         if (session) {
           router.push("/");
         }
-    
     
       }, [session, router]);
 
@@ -38,7 +40,7 @@ export default function Login() {
                             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl dark:text-gray-300 mt-5">Entre com sua conta</h3>
                         </div>
                     </div>
-                    <form className="flex flex-col gap-6">
+                    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                         <Input type="email" variant="bordered" label="Email" />
                         <Input variant="bordered" label="Senha" endContent={
                             <button className="focus:outline-none" type="button" onClick={handleVisibility} aria-label="toggle password visibility">
@@ -51,7 +53,7 @@ export default function Login() {
                         }
                             type={isVisible ? "text" : "password"}
                              />
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-sm"> 
                             <Checkbox>Lembre-me</Checkbox>
                             <Link href="javascript:void(0)" className="text-center text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</Link>
                         </div>
@@ -61,6 +63,10 @@ export default function Login() {
                     <Button onClick={() => signIn('google')} color="default" variant="bordered" className="w-full">
                         <Image src={googleIcon} alt="" width={20} height={20} />
                         Continuar com o Google
+                    </Button>
+                    <Button onClick={() => signIn('github') } color="default" variant="bordered" className="w-full">
+                        <FaGithub className="text-2xl text-default-400" />
+                        Continuar com o Github
                     </Button>
                     <p className="text-center">Não possuí conta? <Link href="/Register" className="font-medium text-indigo-600 hover:text-indigo-500">Cadastra-se</Link></p>
                 </div>

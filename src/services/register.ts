@@ -13,9 +13,10 @@ export async function registerUser(user:User) {
     }
 }
 
-export async function getUser(email: string) {
+export async function getUser(email: string): Promise<User | null> {
     const result = await prisma?.user.findFirst({
         where: { email: email }
     });
+
     return result;
 }
