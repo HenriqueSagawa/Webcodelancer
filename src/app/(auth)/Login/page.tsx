@@ -27,9 +27,42 @@ export default function Login() {
       }, [session, router]);
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     function handleVisibility() {
         setIsVisible(!isVisible);
+    }
+
+    const User = z.object({
+        email: z.string().min(1, { message: "Email é obrigatório" }).email({ message: "Email inválido" }),
+        password: z.string().min(8, { message: "A senha deve ter no mínimo 8 caracteres" }),
+    });
+
+    type User = z.infer<typeof User>
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<User>({
+        resolver: zodResolver(User),
+        mode: "onChange"
+    });
+
+    const onSubmit = async (data: User) => {
+        try {
+            setIsLoading(true);
+            const result = await signIn("credentials", {
+                email: data.email,
+                password: data.password,
+                redirect: false
+            });
+            
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setIsLoading(false);
+        }
     }
     return (
         <div className="w-full h-screen">
@@ -40,9 +73,9 @@ export default function Login() {
                             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl dark:text-gray-300 mt-5">Entre com sua conta</h3>
                         </div>
                     </div>
-                    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-                        <Input type="email" variant="bordered" label="Email" />
-                        <Input variant="bordered" label="Senha" endContent={
+                    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+                        <Input {...register("email")} type="email" variant="bordered" label="Email" errorMessage={errors.email?.message} isInvalid={!!errors.email} />
+                        <Input {...register("password")} variant="bordered" label="Senha" errorMessage={errors.password?.message} isInvalid={!!errors.password} endContent={
                             <button className="focus:outline-none" type="button" onClick={handleVisibility} aria-label="toggle password visibility">
                                 {isVisible ? (
                                     <FaEye className="text-2xl text-default-400 pointer-events-none" />
@@ -57,7 +90,7 @@ export default function Login() {
                             <Checkbox>Lembre-me</Checkbox>
                             <Link href="javascript:void(0)" className="text-center text-indigo-600 hover:text-indigo-500">Esqueceu sua senha?</Link>
                         </div>
-                        <Button color="primary" variant="solid">Entrar</Button>
+                        <Button isLoading={isLoading} type="submit" color="primary" variant="solid"> {isLoading ? 'Entrando...' : 'Entrar'}</Button>
                     </form>
 
                     <Button onClick={() => signIn('google')} color="default" variant="bordered" className="w-full">

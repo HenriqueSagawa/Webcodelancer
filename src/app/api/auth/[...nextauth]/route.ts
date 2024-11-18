@@ -3,7 +3,9 @@ import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUser } from "@/src/services/register";
-import { User } from "@/src/models/User";
+import bcrypt from "bcryptjs";
+
+
 
 const handler = NextAuth({
     providers: [
@@ -32,11 +34,28 @@ const handler = NextAuth({
                 password: { label: "password", type: "password"},
             },
             async authorize(credentials: any, req: any): Promise<any> {
-                const user = await getUser(credentials.email);
-                if (user) {
+
+                try {
+                    const user: any = await getUser(credentials.email);
+
+                    if (!user) {
+                        return null;
+                    }
+                    
+                    const isValidPassword = credentials.password == user.password;
+    
+                    if (!isValidPassword) {
+                        return null;
+                      }
+    
                     return user;
+                } catch (err) {
+                    return null;
                 }
-                return null;
+                
+                
+        
+
             }
         })
     ],
