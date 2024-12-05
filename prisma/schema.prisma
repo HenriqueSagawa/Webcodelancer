@@ -20,3 +20,32 @@ model User {
   password String
   photo Bytes
 }
+
+model Project {
+  id            String   @id @default(cuid())
+  title         String
+  description   String   @db.Text
+  budget        Float
+  deadline      DateTime
+  status        String   @default("OPEN")
+  skills String  @db.Text
+  clientEmail   String
+  createdAt     DateTime @default(now())
+
+  ProjectApplication ProjectApplication[]
+}
+
+model ProjectApplication {
+  id          String   @id @default(cuid())
+  project     Project  @relation(fields: [projectId], references: [id])
+  projectId   String
+  freelancerEmail String
+  clientEmail String
+  status      String   @default("PENDING") 
+  message     String?  @db.Text
+
+  @@index([projectId])
+}
+
+
+

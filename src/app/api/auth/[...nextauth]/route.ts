@@ -4,8 +4,7 @@ import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUser } from "@/src/services/register";
 import bcrypt from "bcryptjs";
-
-
+import prisma from "@/prisma/prisma";
 
 const handler = NextAuth({
     providers: [
@@ -34,28 +33,25 @@ const handler = NextAuth({
                 password: { label: "password", type: "password"},
             },
             async authorize(credentials: any, req: any): Promise<any> {
-
                 try {
                     const user: any = await getUser(credentials.email);
 
                     if (!user) {
                         return null;
                     }
+
+                    const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+                    console.log(isValidPassword);
                     
-                    const isValidPassword = credentials.password == user.password;
-    
                     if (!isValidPassword) {
                         return null;
-                      }
+                    }
     
                     return user;
                 } catch (err) {
+                    console.error("Erro na autorização:", err);
                     return null;
                 }
-                
-                
-        
-
             }
         })
     ],

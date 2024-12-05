@@ -2,11 +2,17 @@
 
 import { User } from "../models/User";
 import prisma from "@/prisma/prisma";
+import bcrypt from "bcrypt";
 
 export async function registerUser(user:User) {
     try {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        
         await prisma?.user.create({
-            data: user
+            data: {
+                ...user,
+                password: hashedPassword
+            }
         });
     } catch (err) {
         console.log(err);
