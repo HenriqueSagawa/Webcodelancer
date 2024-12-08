@@ -23,7 +23,10 @@ export default function ProjetosDisponiveis() {
 
     useEffect(() => {
         getProjects()
-            .then(setProjects)
+            .then(projects => {
+                const availableProjects = projects.filter(project => project.status === "OPEN");
+                setProjects(availableProjects);
+            })
             .finally(() => setIsLoading(false));
     }, []);
 
@@ -132,6 +135,7 @@ export default function ProjetosDisponiveis() {
                         renderSkeletons()
                     ) : (
                         <>
+
                             {currentProjects.map((project) => (
                                 <Card key={project.id} className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg">
                                     <CardHeader className="flex justify-between items-center">

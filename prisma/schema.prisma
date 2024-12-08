@@ -33,6 +33,7 @@ model Project {
   createdAt     DateTime @default(now())
 
   ProjectApplication ProjectApplication[]
+  OngoingProject    OngoingProject[]
 }
 
 model ProjectApplication {
@@ -43,6 +44,19 @@ model ProjectApplication {
   clientEmail String
   status      String   @default("PENDING") 
   message     String?  @db.Text
+
+  @@index([projectId])
+}
+model OngoingProject {
+  id            String   @id @default(cuid())
+  project       Project  @relation(fields: [projectId], references: [id])
+  projectId     String
+  freelancerEmail String
+  clientEmail   String
+  startDate     DateTime @default(now())
+  endDate       DateTime?
+  status        String   @default("IN_PROGRESS")
+  feedback      String?  @db.Text
 
   @@index([projectId])
 }

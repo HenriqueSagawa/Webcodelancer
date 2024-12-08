@@ -13,8 +13,11 @@ import { Footer } from "../components/Footer/Footer";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session } = useSession();
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -41,7 +44,9 @@ export default function Home() {
             <br className="hidden lg:block" /> Vamos acender a luz do seu projeto!
           </p>
           <Button variant="shadow" color="secondary" className="mt-4">
-            Começar <Arrow />
+            <Link href={session?.user ? "/Dashboard" : "/Login"} className="flex items-center gap-2">
+              Começar <Arrow />
+            </Link>
           </Button>
         </div>
         <div className="relative w-full lg:w-auto px-4 lg:px-0" data-aos="fade-left">
@@ -113,53 +118,6 @@ export default function Home() {
                 Com o pagamento seguro da WebCodeLancer, o pagamento será
                 repassado para o freelancer somente quando o projeto estiver
                 concluído.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-20 lg:mt-36 relative overflow-hidden">
-          <div className="absolute w-72 h-72 bg-purple-500/10 rounded-full blur-3xl -top-20 -left-20" />
-          <div className="absolute w-72 h-72 bg-blue-500/10 rounded-full blur-3xl -top-20 -right-20" />
-          
-          <h1 className="text-3xl lg:text-5xl font-semibold text-center mb-16" data-aos="fade-up">
-            Recursos <span className="bg-gradient-to-r from-[#E60599] to-[#025CA4] inline-block text-transparent bg-clip-text">Exclusivos</span>
-          </h1>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
-            <div className="bg-white/5 backdrop-blur-xl rounded-xl p-8 border border-gray-200/20 hover:border-purple-500/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-6">
-                <IoTimeOutline size={32} className="text-white" />
-              </div>
-              <h3 className="font-semibold text-xl mb-4">
-                Rastreamento Inteligente
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Monitore o tempo e progresso dos seus projetos com nossa ferramenta avançada de rastreamento.
-              </p>
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-xl rounded-xl p-8 border border-gray-200/20 hover:border-blue-500/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-6">
-                <IoStatsChartOutline size={32} className="text-white" />
-              </div>
-              <h3 className="font-semibold text-xl mb-4">
-                Análises em Tempo Real
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Visualize métricas e insights importantes para tomar as melhores decisões.
-              </p>
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-xl rounded-xl p-8 border border-gray-200/20 hover:border-pink-500/50 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-500 rounded-lg flex items-center justify-center mb-6">
-                <IoShieldOutline size={32} className="text-white" />
-              </div>
-              <h3 className="font-semibold text-xl mb-4">
-                Segurança Garantida
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Proteção total dos seus dados e transações com criptografia avançada.
               </p>
             </div>
           </div>

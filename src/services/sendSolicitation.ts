@@ -13,6 +13,7 @@ export async function sendSolicitation(solicitation: SolicitationType) {
 
 export async function getSolicitations() {
     const solicitations = await prisma.projectApplication.findMany();
+    console.log(solicitations);
     return solicitations;
 }
 
