@@ -18,7 +18,7 @@ model User {
   name String
   email String @unique
   password String
-  photo Bytes
+  photo String
 }
 
 model Project {

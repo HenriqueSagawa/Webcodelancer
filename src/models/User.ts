@@ -1,11 +1,6 @@
-interface User {
-  id?: string;
+export interface User {
   name: string;
   email: string;
   password: string;
-  photo?: string;
-  isFreelancer?: boolean;
-  skills?: string[];
+  photo: string;
 }
-
-export default User;
